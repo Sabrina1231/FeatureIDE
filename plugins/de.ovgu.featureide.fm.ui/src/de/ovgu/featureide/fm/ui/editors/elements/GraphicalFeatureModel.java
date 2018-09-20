@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Point;
+
 import de.ovgu.featureide.fm.core.base.IConstraint;
 import de.ovgu.featureide.fm.core.base.IFeature;
 import de.ovgu.featureide.fm.core.base.IFeatureModel;
@@ -36,6 +40,7 @@ import de.ovgu.featureide.fm.core.base.event.FeatureIDEEvent;
 import de.ovgu.featureide.fm.core.base.event.FeatureIDEEvent.EventType;
 import de.ovgu.featureide.fm.core.base.impl.Constraint;
 import de.ovgu.featureide.fm.core.explanations.Explanation;
+import de.ovgu.featureide.fm.ui.editors.FeatureUIHelper;
 import de.ovgu.featureide.fm.ui.editors.IGraphicalConstraint;
 import de.ovgu.featureide.fm.ui.editors.IGraphicalFeature;
 import de.ovgu.featureide.fm.ui.editors.IGraphicalFeatureModel;
@@ -191,6 +196,17 @@ public class GraphicalFeatureModel implements IGraphicalFeatureModel {
 		IGraphicalFeature graphicalFeature = features.get(newFeature);
 		if (graphicalFeature == null) {
 			graphicalFeature = new GraphicalFeature(newFeature, this);
+			final IGraphicalFeature parent = FeatureUIHelper.getGraphicalParent(graphicalFeature);
+			if (parent != null) {
+
+				final Label label = new Label();
+				label.setText(graphicalFeature.getObject().getName());
+				final Dimension labelSize = label.getPreferredSize();
+				final int delay = (parent.getSize().width - labelSize.width) / 2;
+				final Point newLocation = new Point(parent.getLocation().x + delay, parent.getLocation().y + 30);
+				graphicalFeature.setLocation(newLocation);
+			}
+			hdfjgkdshlkg;
 			features.put(newFeature, graphicalFeature);
 		}
 		return graphicalFeature;
